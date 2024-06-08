@@ -83,6 +83,6 @@ When you query this table, it will read from the file:\
 /path/to/file/toys.csv\
 This file must be accessible to the database server. You cannot use external tables to read files on your machine!
 
-
-
-
+## Temporary Tables
+Temporary tables store session specific data. Only the session that adds the rows can see them. This can be handy to store working data.\\
+There are two types of temporary table in Oracle Database: global and private.

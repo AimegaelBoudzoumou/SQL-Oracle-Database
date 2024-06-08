@@ -15,12 +15,14 @@ create table bricks (
 );
 
 ```
-
-
-
 ## Viewing Table Information
 ```sql
 select table_name, iot_name, iot_type, external, 
 	partitioned, temporary, cluster_name
 from user_tables;
+```
+```SQL
+select table_name
+from all_tables
+where table_name = 'BRICKS';
 ```

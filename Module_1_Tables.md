@@ -1,6 +1,6 @@
 # Tables
 
-## Creating a Table
+## 1. Creating a Table
 ```sql
 create table toys (
     toy_name varchar2(50),
@@ -15,7 +15,7 @@ create table bricks (
 );
 
 ```
-## Viewing Table Information
+## 2. Viewing Table Information
 ```sql
 select table_name, iot_name, iot_type, external, 
        partitioned, temporary, cluster_name
@@ -27,7 +27,7 @@ from   user_tables
 where  table_name = 'BRICKS';
 ```
 
-## Table Organization
+## 3. Table Organization
 Create table in Oracle Database has an organization clause. This defines how it physically stores rows in the table.\
 The options for this are:\ 
 - Heap
@@ -41,7 +41,7 @@ create table toys_heap (
 ) organization heap;
 ```
 
-## Index-Organized Tables
+## 3.1. Index-Organized Tables
 Unlike a heap table, an index-organized table (IOT) imposes order on the rows within it. It physically stores rows sorted by its primary key. To create an IOT, you need to:
 
 - Specify a primary key for the table
@@ -60,7 +60,7 @@ from user_tables
 where table_name = 'BRICKS_IOT';
 ```
 
-## External Tables
+## 3.2. External Tables
 You use external tables to read non-database files on the database server. For example, comma-separated values (CSV) files. To do this, you need to:
 - Create a directory pointing to the location of the file on the server
 - Use the organization external clause
@@ -83,6 +83,33 @@ When you query this table, it will read from the file:\
 /path/to/file/toys.csv\
 This file must be accessible to the database server. You cannot use external tables to read files on your machine!
 
-## Temporary Tables
+## 4. Temporary Tables
 Temporary tables store session specific data. Only the session that adds the rows can see them. This can be handy to store working data.\
 There are two types of temporary table in Oracle Database: global and private.
+
+### 4.1. Global Temporary Tables
+To create a global temporary table add the clause "global temporary" between create and table. For example:
+```sql
+create global temporary table toys_gtt (
+  toy_name varchar2(100)
+);
+```
+_The definition of the temporary table is permanent. All users of the database can access it. But only your session can view rows you insert._
+
+### 4.2. Private Temporary Tables
+Starting in Oracle Database 18c, you can create private temporary tables. These tables are only visible in your session. Other sessions can't see the table! \
+To create one use "private temporary" between create and table. You must also prefix the table name with ora$ptt_:
+```sql
+create private temporary table ora$ptt_toys (
+    toy_name varchar2(100)
+);
+```
+### 4.3. Viewing Temporary Table Details
+The column temporary in the *_tables views tell you which tables are temporary:
+```sql
+select table_name, temporary
+from user_tables
+where table_name in ('TOYS_GTT', 'ORA$PTT_TOYS');
+```
+
+Note that you can only see a row for the global temporary table. The database doesn't write private temporary tables to the data dictionary!

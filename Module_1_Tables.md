@@ -60,9 +60,28 @@ from user_tables
 where table_name = 'BRICKS_IOT';
 ```
 
+## External Tables
+You use external tables to read non-database files on the database server. For example, comma-separated values (CSV) files. To do this, you need to:
+- Create a directory pointing to the location of the file on the server
+- Use the organization external clause
+- State the directory and name of the file you want to read
 
+```sql
+create or replace directory toy_dir as '/path/to/file';
 
+create table toys_ext (
+  toy_name varchar2(100)
+) organization external (
+  default directory tmp
+  location ('toys.csv')
+);
+```
 
+_Note: LiveSQL doesn't support external tables._
+
+When you query this table, it will read from the file:\
+/path/to/file/toys.csv\
+This file must be accessible to the database server. You cannot use external tables to read files on your machine!
 
 
 

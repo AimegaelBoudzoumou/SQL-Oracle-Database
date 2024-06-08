@@ -116,3 +116,23 @@ from user_tables;
 ```
 
 Note that you can only see a row for the global temporary table. The database doesn't write private temporary tables to the data dictionary!
+
+## Partitioning Tables
+
+Partitioning logically splits up a table into smaller tables according to the partition column(s). So rows with the same partition key are stored in the same physical location.
+
+There are three types of partitioning available:
+
+- Range
+- List
+- Hash
+
+To create a partitioned table, you need to:
+- Choose a partition method
+- State the partition columns
+- Define the initial partitions
+
+The following statements create one table for each partitioning type:
+
+```sql
+

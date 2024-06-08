@@ -6,7 +6,9 @@ create table toys (
     toy_name varchar2(50),
     weight   number
 );
+```
 
+```sql
 create table bricks (
     colour varchar2(10),
     shape  varchar2(10)

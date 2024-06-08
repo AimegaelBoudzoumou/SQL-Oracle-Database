@@ -110,6 +110,9 @@ The column temporary in the *_tables views tell you which tables are temporary:
 select table_name, temporary
 from user_tables
 where table_name in ('TOYS_GTT', 'ORA$PTT_TOYS');
+
+select table_name, temporary
+from user_tables;
 ```
 
 Note that you can only see a row for the global temporary table. The database doesn't write private temporary tables to the data dictionary!

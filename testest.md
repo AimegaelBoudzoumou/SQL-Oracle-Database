@@ -1,1 +1,9 @@
+#Table
 
+## Creating a Table
+```sql
+create table toys (
+    toy_name varchar2(50),
+    weight   number
+);
+```

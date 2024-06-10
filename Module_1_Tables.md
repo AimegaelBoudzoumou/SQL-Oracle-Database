@@ -135,4 +135,115 @@ To create a partitioned table, you need to:
 The following statements create one table for each partitioning type:
 
 ```sql
+create table toys_range (
+    toy_name varchar2(100)
+)   partition by range (toy_name) (
+    partition p0 values less than ('b'),
+    partition p1 values less than ('c')
+);
+
+create table toys_list (
+    toy_name varchar2(100)    
+)   partition by list (toy_name) (
+    partition p0 values ('Sir Stripypants'),
+    partition p1 values ('Miss Snuggles')
+);
+
+By default a partitioned table is heap-organized. But you can combine partitioning with some other properties. For example, you can have a partitioned IOT:
+
+```sql
+create table toys_part_iot (
+    toy_id integer primary key,
+    toy_name varchar2(100)
+)   organization index
+    partition by hash (toy_id) partitions 4;
+````
+
+The database sets the partitioned column of *_tables to YES if the table is partitioned. You can view details about the partitions in the *_tab_partitions tables:
+
+```sql
+select table_name, partitioned
+from user_tables
+where table_name in ( 'TOYS_HASH', 'TOYS_LIST', 'TOYS_RANGE', 'TOYS_PART_IOT' );
+
+select table_name, partition_name
+from user_tab_partitions;
+
+```
+
+Note that partitioning is a separately licensable option of Oracle Database. Ensure you have this option before using it!
+
+### Try It!
+Complete the following statement to create a hash-partitioned table. This should be partitioned on brick_id and have 8 partitions:
+
+```sql
+create table bricks_hash (
+  brick_id integer
+) partition by /*TODO*/;
+```
+__This is the solution :__
+```sql
+create table bricks_hash (
+  brick_id integer
+) partition by hash (brick_id) partitions 8;
+
+select table_name, partitioned
+from   user_tables
+where 	table_name = 'BRICKS_HASH';
+```
+
+## Table Clusters
+A table cluster can store rows from many tables in the same physical location. To do this, first you must create the cluster:
+
+```sql
+create cluster toy_cluster (
+    toy_name varchar2(100)
+);
+```
+
+Then place your tables in it using the cluster clause of create table:
+
+```sql
+create table toys_cluster_tab (
+    toy_name varchar2(100)
+)   cluster toy_cluster ( toy_name );
+
+create table toy_owners_cluster_tab (
+    owner    varchar2(100),
+    toy_name varchar2(100) 
+)   cluster toy_cluster ( toy_name );
+```
+
+Rows that have the same value for toy_name in toys_clus_tab and toy_owners_clus_tab will be in the same place. This can make it faster to get a row for a given toy_name from both tables.
+
+You can view details of clusters by querying the *_clusters views. If a table is in a cluster, cluster_name of *_tables tells you which cluster it is in:
+
+```sql
+select cluster_name from user_clusters;
+
+select table_name, cluster_name
+from user_tables
+where table_name in ( 'TOYS_CLUSTER_TAB', 'TOY_OWNERS_CLUSTER_TAB' );
+```
+
+__Note:__ Clustering tables is an advanced topic. They have some restrictions. So make sure you read up on these before you use them!
+
+## Dropping Tables
+You can remove existing tables with the drop table command. Just add the name of the table you want to destroy:
+
+```sql
+create table toys_heap (
+    table_name varchar2(100)
+)   organization heap;
+
+select table_name
+from   user_tables
+where  table_name = 'TOYS_HEAP';
+
+drop table toys_heap;
+
+select table_name
+from toys_heap
+where table_name = 'TOYS_HEAP';
+```
 

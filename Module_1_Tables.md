@@ -29,7 +29,7 @@ where  table_name = 'BRICKS';
 
 ## 3. Table Organization
 Create table in Oracle Database has an organization clause. This defines how it physically stores rows in the table.\
-The options for this are:\ 
+The options for this are:
 - Heap
 - Index
 - External
@@ -117,7 +117,7 @@ from user_tables;
 
 Note that you can only see a row for the global temporary table. The database doesn't write private temporary tables to the data dictionary!
 
-## Partitioning Tables
+## 5.1. Partitioning Tables
 
 Partitioning logically splits up a table into smaller tables according to the partition column(s). So rows with the same partition key are stored in the same physical location.
 
@@ -192,7 +192,7 @@ from   user_tables
 where 	table_name = 'BRICKS_HASH';
 ```
 
-## Table Clusters
+## 6. Table Clusters
 A table cluster can store rows from many tables in the same physical location. To do this, first you must create the cluster:
 
 ```sql
@@ -228,7 +228,7 @@ where table_name in ( 'TOYS_CLUSTER_TAB', 'TOY_OWNERS_CLUSTER_TAB' );
 
 __Note:__ Clustering tables is an advanced topic. They have some restrictions. So make sure you read up on these before you use them!
 
-## Dropping Tables
+## 7. Dropping Tables
 You can remove existing tables with the drop table command. Just add the name of the table you want to destroy:
 
 ```sql

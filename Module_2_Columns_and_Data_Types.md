@@ -48,7 +48,7 @@ where  table_name = 'TOYS';
 
 ## 3. Data Types
 
-### Character Data Types
+### 3.1. Character Data Types
 Oracle Database has three key character types:
 - __varchar2__ : 4,000 bytes (Oracle Database 11.2 and before) and 32,767 (from 12.1).
 - __char__ : 2,000 bytes.
@@ -69,7 +69,7 @@ from user_tab_columns
 where table_name = 'CHARACTER_DATA';
 ```
 
-### Numeric Data Types
+### 3.2. Numeric Data Types
 The built-in numeric data types for Oracle Database are:
 - numeric
 - float
@@ -96,3 +96,5 @@ where table_name = 'NUMERIC_DATA';
 ```
 
 __Note :__ sf sf for significant, dp for decimal point
+
+### 3.3. Datetime and Interval Data Types

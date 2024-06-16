@@ -80,7 +80,7 @@ You use these to store numeric values, such as prices, weights, etc.
 
 ```sql
 create table numeric_data (
-    number_3_sf_2_dp  number(3, 2), -- sf sf for significant, dp for decimal point
+    number_3_sf_2_dp  number(3, 2), -- sf for significant, dp for decimal point
     number_3_sf_2     number(3, -2),
     number_5_sf_0_dp  number(5, 0),
     integer_col       integer,

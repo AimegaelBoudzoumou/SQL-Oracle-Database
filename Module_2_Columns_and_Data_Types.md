@@ -95,6 +95,6 @@ from user_tab_columns
 where table_name = 'NUMERIC_DATA';
 ```
 
-__Note :__ sf for significant, dp for decimal point
+__Note :__ sf for significant figures, dp for decimal point
 
 ### 3.3. Datetime and Interval Data Types

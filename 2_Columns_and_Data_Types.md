@@ -109,8 +109,10 @@ Oracle Database has the following datetime data types:
 Examples :
 
 date'2018-02-14'
+
 to_date ( '2018-07-23 09:00 AM', 'YYYY-MM-DD HH:MI AM' )
 
 timestamp '2018-02-14 09:00:00.123'
+
 to_timestamp ( '2018-07-23 09:00:00.123 AM', 'YYYY-MM-DD HH:MI:SS.FF AM' )
 

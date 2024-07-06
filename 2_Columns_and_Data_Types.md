@@ -98,3 +98,18 @@ where table_name = 'NUMERIC_DATA';
 __Note :__ sf for significant figures, dp for decimal point
 
 ### 3.3. Datetime and Interval Data Types
+
+Oracle Database has the following datetime data types:
+
+- date
+- timestamp
+- timestamp with time zone
+- timestamp with local time zone
+
+Examples :
+date'2018-02-14'
+to_date ( '2018-07-23 09:00 AM', 'YYYY-MM-DD HH:MI AM' )
+
+timestamp '2018-02-14 09:00:00.123'
+to_timestamp ( '2018-07-23 09:00:00.123 AM', 'YYYY-MM-DD HH:MI:SS.FF AM' )
+

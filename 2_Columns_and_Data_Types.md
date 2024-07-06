@@ -1,5 +1,15 @@
 # Columns and Data Types
 
+### Content
+
+1. Defining Columns
+2. Viewing Column Information
+3. Data Types
+4. Adding Columns to Existing Tables
+5. Removing Columns from a Table
+
+----------------------------------------------------------------------------------------------------------------------
+
 ## 1. Defining Columns
 
 A table in Oracle Database can have up to 1,000 columns. You define these when you create a table. You can also add them to existing tables.
@@ -207,7 +217,7 @@ from   user_tab_columns
 where  table_name = 'this_table_has_three_columns';
 ```
 
-## 4. Removing Columns from a Table
+## 5. Removing Columns from a Table
 
 You can also remove columns from a table. To get rid of a column from a table, alter the table again, this time with the drop clause.
 
@@ -251,7 +261,7 @@ from user_tab_columns
 where table_name = 'TOYS';
 ```
 
-## Other Data Types
+## 6. Other Data Types
 
 Oracle Database includes other, specialized data types. These include XMLtype for XML documents. And spatial types to store location details.
 

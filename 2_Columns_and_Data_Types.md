@@ -146,14 +146,44 @@ Blob stands for binary large object. As with clob, the maximum size you can stor
 The following creates a table with binary data type columns:
 
 ```sql
-/*
 create table binary_data (
     raw_col raw(1000),
     blob_col blob
 );
-*/
 
 select column_name, data_type, data_length, data_precision, data_scale
 from user_tab_columns
 where table_name = 'BINARY_DATA';
 ```
+
+### Try It!
+Complete the following statement to create a table with the following columns:
+
+brick_id of type number(20, 0)
+colour of type varchar2, max size 10
+price of type number with precision 10 and scale 2
+purchased_date of type date
+
+```sql
+create table bricks (
+  /* TODO */
+);
+```
+
+This is a solution :
+
+```sql
+create table bricks (
+    brick_id number(20,0),
+    coulor varchar2(10),
+    price number(10,2),
+    purchases_date date
+);
+
+select column_name, data_type, data_length, data_precision, data_scale
+from   user_tab_columns
+where  table_name = 'BRICKS';
+```
+
+
+

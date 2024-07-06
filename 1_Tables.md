@@ -1,5 +1,18 @@
 # Tables
 
+### Content
+
+1. Creating a Table
+2. Viewing Table Information
+3. Table Organization
+4. Temporary Tables
+5. Partitioning Tables
+6. Table Clusters
+7. Dropping Tables
+8. 
+
+----------------------------------------------------------------------------------------------------------------------
+
 ## 1. Creating a Table
 ```sql
 create table toys (
@@ -117,7 +130,7 @@ from user_tables;
 
 Note that you can only see a row for the global temporary table. The database doesn't write private temporary tables to the data dictionary!
 
-## 5.1. Partitioning Tables
+## 5. Partitioning Tables
 
 Partitioning logically splits up a table into smaller tables according to the partition column(s). So rows with the same partition key are stored in the same physical location.
 

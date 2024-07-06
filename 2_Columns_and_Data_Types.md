@@ -189,5 +189,75 @@ where  table_name = 'BRICKS';
 
 You add columns to an existing table with __alter table__. You can add as many as you want (up to the 1,000 column table limit):
 
+```sql
+create table this_table_has_three_columns (
+  this_is_a_character_column varchar2(100),
+  this_is_a_number_column    number,
+  this_is_a_date_column      date
+);
+-- The following adds two columns to the table this_table_has_three_columns. One timestamp and one blob:
+
+alter table this_table_has_three_columns add (
+    this_is_a_timestamp_column timestamp,
+    this_is_a_binary_large_object blob
+);
+
+select column_name, data_type, data_length, data_precision, data_scale
+from   user_tab_columns
+where  table_name = 'this_table_has_three_columns';
+```
+
+## 4. Removing Columns from a Table
+
+You can also remove columns from a table. To get rid of a column from a table, alter the table again, this time with the drop clause.
+
+The following removes the columns you added to this_table_has_three_columns in the previous step:
+
+```sql
+alter table this_table_has_three_columns drop (
+    this_is_a_timestamp_column,
+    this_is_a_binary_large_object
+);
+
+select column_name, data_type, data_length, data_precision, data_scale
+from user_tab_columns
+where table_name = 'this_table_has_three_columns';
+```
+
+### Try It!
+Complete the alter table statements to:
+- Add the weight as a number with precision 8 and scale 1
+- Remove cuddliness factor
+
+```sql
+drop table toys;
+
+create table toys (
+    toy_id            integer,
+    toy_name          varchar2(100),
+    cuddliness_factor integer
+);
+
+alter table toys add (
+    weight number(8,1)
+);
+
+alter table toys drop (
+    cuddliness_factor    
+);
+
+select column_name, data_type, data_length, data_precision, data_scale
+from user_tab_columns
+where table_name = 'TOYS';
+```
+
+## Other Data Types
+
+Oracle Database includes other, specialized data types. These include XMLtype for XML documents. And spatial types to store location details.
+
+For more details on these, read the [data type documentation.](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html#GUID-A3C0D836-BADB-44E5-A5D4-265BA5968483)
+
+
+
 
 

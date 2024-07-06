@@ -110,9 +110,11 @@ Examples :
 
 date'2018-02-14'
 
-to_date ( '2018-07-23 09:00 AM', 'YYYY-MM-DD HH:MI AM' )
+to_date ( '2018-07-23 09:00 AM', 'YYYY-MM-DD HH:MI AM' ) # If you need to state the time of day too, you need to use to_date
 
-timestamp '2018-02-14 09:00:00.123'
+timestamp '2018-02-14 09:00:00.123' # If you need greater precision than dates, use timestamps
 
 to_timestamp ( '2018-07-23 09:00:00.123 AM', 'YYYY-MM-DD HH:MI:SS.FF AM' )
+
+
 

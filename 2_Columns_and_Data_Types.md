@@ -116,5 +116,7 @@ timestamp '2018-02-14 09:00:00.123' # If you need greater precision than dates, 
 
 to_timestamp ( '2018-07-23 09:00:00.123 AM', 'YYYY-MM-DD HH:MI:SS.FF AM' )
 
+__Timestamp :__ You can store time durations with intervals. Oracle Database has two interval types: year to month and day to second.
+
 
 

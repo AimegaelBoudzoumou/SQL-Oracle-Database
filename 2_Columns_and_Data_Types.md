@@ -118,7 +118,7 @@ to_timestamp ( '2018-07-23 09:00:00.123 AM', 'YYYY-MM-DD HH:MI:SS.FF AM' )
 
 __Timestamp :__ You can store time durations with intervals. Oracle Database has two interval types: year to month and day to second.
 
-```
+```sql
 create table datetime_data (
   date_col                      date,
   timestamp_with_3_frac_sec_col timestamp(3),
@@ -133,3 +133,27 @@ from   user_tab_columns
 where  table_name = 'DATETIME_DATA';
 ```
 
+### 3.2. Binary Data Types
+
+You use binary data to store in its original format. These are usually other files, such as graphics, sound, video or Word documents. There are two key binary types: raw and blob.
+
+__Raw__
+Like with character data, raw is for smaller items. You specify the maximum length of data for each column. It has a maximum limit of 2,000 bytes up to 11.2 and 32,767 from 12.1.
+
+__Blob__
+Blob stands for binary large object. As with clob, the maximum size you can store is (4 gigabytes - 1) * (database block size).
+
+The following creates a table with binary data type columns:
+
+```sql
+/*
+create table binary_data (
+    raw_col raw(1000),
+    blob_col blob
+);
+*/
+
+select column_name, data_type, data_length, data_precision, data_scale
+from user_tab_columns
+where table_name = 'BINARY_DATA';
+```

@@ -110,9 +110,9 @@ Examples :
 
 date'2018-02-14'
 
-to_date ( '2018-07-23 09:00 AM', 'YYYY-MM-DD HH:MI AM' ) # If you need to state the time of day too, you need to use to_date
+to_date ( '2018-07-23 09:00 AM', 'YYYY-MM-DD HH:MI AM' ) -- If you need to state the time of day too, you need to use to_date
 
-timestamp '2018-02-14 09:00:00.123' # If you need greater precision than dates, use timestamps
+timestamp '2018-02-14 09:00:00.123' -- If you need greater precision than dates, use timestamps
 
 to_timestamp ( '2018-07-23 09:00:00.123 AM', 'YYYY-MM-DD HH:MI:SS.FF AM' )
 
@@ -133,7 +133,7 @@ from   user_tab_columns
 where  table_name = 'DATETIME_DATA';
 ```
 
-### 3.2. Binary Data Types
+### 3.4. Binary Data Types
 
 You use binary data to store in its original format. These are usually other files, such as graphics, sound, video or Word documents. There are two key binary types: raw and blob.
 
@@ -184,6 +184,10 @@ select column_name, data_type, data_length, data_precision, data_scale
 from   user_tab_columns
 where  table_name = 'BRICKS';
 ```
+
+## 4. Adding Columns to Existing Tables
+
+You add columns to an existing table with __alter table__. You can add as many as you want (up to the 1,000 column table limit):
 
 
 

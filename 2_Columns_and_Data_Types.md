@@ -118,5 +118,18 @@ to_timestamp ( '2018-07-23 09:00:00.123 AM', 'YYYY-MM-DD HH:MI:SS.FF AM' )
 
 __Timestamp :__ You can store time durations with intervals. Oracle Database has two interval types: year to month and day to second.
 
+```
+create table datetime_data (
+  date_col                      date,
+  timestamp_with_3_frac_sec_col timestamp(3),
+  timestamp_with_tz             timestamp with time zone,
+  timestamp_with_local_tz       timestamp with local time zone,
+  year_to_month_col             interval year to month,
+  day_to_second_col             interval day to second
+);
 
+select column_name, data_type, data_length, data_precision, data_scale
+from   user_tab_columns
+where  table_name = 'DATETIME_DATA';
+```
 

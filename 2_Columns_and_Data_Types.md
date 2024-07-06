@@ -107,6 +107,7 @@ Oracle Database has the following datetime data types:
 - timestamp with local time zone
 
 Examples :
+
 date'2018-02-14'
 to_date ( '2018-07-23 09:00 AM', 'YYYY-MM-DD HH:MI AM' )
 

@@ -8,7 +8,6 @@ The content of this project is based on this Oracle's course : [Databases for De
 ### Tables
 ### Columns and Data Types
 ### Data Modeling
-### Tables, Columns and Modeling Review
 ### Select and Where
 ### Joins
 ### Aggregates and Group By

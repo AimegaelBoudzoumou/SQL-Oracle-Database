@@ -150,4 +150,30 @@ create table appointments (
 ```
 
 ## 8. Supertypes and Subtypes
+
+At this point you may note that we've stored people's names in both the consultant and patient tables. And a person could be both a consultant and a patient! This can lead to recording different names for the same person.
+
+To avoid this, scrap the patient and consultant tables. And create a single table to store people's details instead. For example:
+
+```sql
+create table people (
+    person_id integer,
+    full_name varchar2(100)
+);
+```
+
+Now we have a single place to record all information about people. But there may be details specific to either consultants or patients. For example, consultants have a salary, speciality, and so on. And patients may have a hospital number, etc.
+
+```sql
+create table consultants (
+    consultant_id integer,
+    salary        number(10,2),
+    speciality    varchar2(30)
+);
+
+create table patients (
+    patient_id      integer,
+    hospital_number integer
+);
+```
 ## 9. Relational vs. Document Storage

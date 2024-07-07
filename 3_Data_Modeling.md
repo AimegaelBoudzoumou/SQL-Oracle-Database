@@ -80,12 +80,42 @@ At this point you may identify new entities. For example, the appointment stores
 
 E.g., both the appointments below are for the PHYSIO clinic. But there's a different address for each!
 
-| Column 1      | Column 2      |
-| ------------- | ------------- |
-| Cell 1, Row 1 | Cell 2, Row 1 |
-| Cell 1, Row 2 | Cell 1, Row 2 |
+| APPOINTMENT_DATETIME      | CLINIC_NAME      | CLINIC_ADDRESS
+| ------------------------- | ---------------- | --------------
+| 1 SEP 2018 10:00          | PHYSIO           | 1 Hospital Way
+| 2 SEP 2018 12:00          | PHYSIO           | 3 Hospital Street
+
+To avoid this, create a new entity, clinic. This stores the details of each clinic:
+
+Clinic
+- Clinic name
+- Its address
+
+The appointment will now store only the clinic's name:
+
+Appointment
+- The date & time
+- The clinic name
+- The patient and consultant attending
+
+Finding dependencies like this and splitting the tables is a process called normalization. This removes redundant information, ensuring you store each fact once.
+
+The logical model will also define the data types of each attribute. And any constraints that apply. For example, when booking an appointment, the date must be in the future.
+
+You should also define the attributes that uniquely identify each instance of an entity. These will form the primary and unique keys for the tables.
 
 ## 6. Normalization
+
+As described above, normalization is the process of removing redundancy in your design. So you store each fact once. This stops data errors appearing.
+
+Normal forms are numbered, starting with first normal form. Followed by second, third, etc. up to fifth. These are usually referred to by their abbreviation, xNF where x is its number. So first normal form is 1NF and so on.
+
+There are a few other normal forms. The most common is Boyce-Codd normal form. This is a refinement of 3NF. So it is sometimes called 3.5NF.
+
+To be in a normal form, you must meet its requirements and those of the forms lower than it. So to reach 3NF, your tables must also be in 1NF & 2NF.
+
+A full discussion of normal forms is outside the scope of this tutorial. For more details on these, read this [https://www.bkent.net/Doc/simple5.htm](simple guide to five normal forms).
+
 ## 7. Physical Model
 ## 8. Supertypes and Subtypes
 ## 9. Relational vs. Document Storage

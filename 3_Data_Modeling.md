@@ -10,7 +10,6 @@
 6. Normalization
 7. Physical Model
 8. Supertypes and Subtypes
-9. Relational vs. Document Storage
 
 ----------------------------------------------------------------------------------------------------------------------
 
@@ -189,55 +188,3 @@ Here are some guidelines for determining whether to combine or split tables:
 - If one table has columns which are only apply if the row is of a certain type, consider splitting these out into subtypes
 
 Again, identifying supertypes & subtypes is an iterative process. As you build the database, you may find you need to split a table into subtypes. Or merge two tables into one. Knowing what your application will do and store is key to choosing the correct design.
-
-## 9. Relational vs. Document Storage
-
-The process above may take a while to complete. To save time, you may be tempted to go straight from the requirements to storing each appointment as a document in on table, like so:
-
-```sql
-create table appointments (
-    appointments_doc varchar2(4000)
-);
-```
-
-There are various document formats such as JSON (JavaScript Object Notation) or XML that allow you to do this.
-
-For example, for each appointment you could store a JSON document like the following:
-
-{
-  appointmentDatetime: "2018-09-01 10:00",
-  location: {
-    name: "PHYSIO",
-    address: "1 Hospital Way"
-  },
-  consultant: {
-    name: "Doctor Awesome"
-  }
-  patient: {
-    name: "Miss Sick"
-  }
-}
-
-But this has many drawbacks. You need to look at the document to know the attribute names. Which makes it harder to query your data.
-
-And it duplicates many details. Such as the clinic address and the consultant and patient names. This can lead to data errors.
-
-For example, this document is for another appointment with Doctor Awesome:
-
-{
-  appointmentDatetime: "2018-09-01 11:00",
-  location: {
-    name: "PHYSIO",
-    address: "3 Hospital Street"
-  },
-  consultant: {
-    name: "Doctor J Awesome"
-  }
-  patient: {
-    name: "Mr. Hypochondriac"
-  }
-}
-
-But this repeats the address error described before. And it stores the doctor's name with their initial, J. This is different to the first appointment. Errors like this can lead to confusion among staff and patients using the system. The time you saved in up-front design is often lost in the ongoing maintenance of the application.
-
-In some cases, storing everything in a single document is the way to go. But taking time to build and create a relational model will make your system easier to use and more flexible to change in the long run.

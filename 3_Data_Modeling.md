@@ -38,9 +38,53 @@ For example, say you're building a system to manage appointments for hospital cl
 - View available appointment times & select one to attend
 - View details of upcoming appointments they've booked
 
+It must store the following information:
+
+- The location, date, and time of the appointment
+- The name of the patient
+- The name of the consultant who will see the patient
+
+These are the functional requirements. i.e. what the system must do to serve its purpose. At this stage you should also capture non-functional requirements. These define how the application works.
+
+For example, all pages in the application must load in under two seconds. These can influence how you build your tables.
 
 ## 4. Conceptual Model
+
+The conceptual model is a high-level overview of the information the database will store. It defines key entities in the application. Entities are real-world things the database will store details of.
+
+For the booking system, the key entities are:
+
+- The patient - the person seeking treatment
+- The consultant - the person who will diagnose the patient's condition & prescribe treatment
+- The appointment - the place and time of the consultation
+
 ## 5. Logical Model
+
+The logical model fleshes out the details in the conceptual model. It documents which aspects of the entities the system will store. These are the attributes of the entity. You represent this in an Entity-Relationship Diagram (ERD).
+
+At this point, we've identified the following information to store:
+
+__Patient__
+- Their name
+
+__Consultant__
+
+- Their name
+
+__Appointment__
+- The date & time
+- The clinic name & address
+- The patient and consultant attending
+
+At this point you may identify new entities. For example, the appointment stores the clinic details. Every appointment at a clinic will be at the same place. Storing the address on each appointment duplicates these details, making data errors likely.
+
+E.g., both the appointments below are for the PHYSIO clinic. But there's a different address for each!
+
+| Column 1      | Column 2      |
+| ------------- | ------------- |
+| Cell 1, Row 1 | Cell 2, Row 1 |
+| Cell 1, Row 2 | Cell 1, Row 2 |
+
 ## 6. Normalization
 ## 7. Physical Model
 ## 8. Supertypes and Subtypes

@@ -117,5 +117,37 @@ To be in a normal form, you must meet its requirements and those of the forms lo
 A full discussion of normal forms is outside the scope of this tutorial. For more details on these, read this [simple guide to five normal forms](https://www.bkent.net/Doc/simple5.htm)
 
 ## 7. Physical Model
+
+Once you've built your logical model, it's time to translate this to the physical model. The output of this is the create table statements to build the database.
+
+At this point you should take into account non-functional requirements, such as performance. This will influence which type of table you create. For example, whether to partition it or build an index-organized table.
+
+This leads to the following tables:
+
+```sql
+create table consultants (
+    consultant_id   integer,
+    consultant_name varchar2(100)
+);
+
+create table patients (
+    patient_id   integer,
+    patient_name varchar2(100)
+);
+
+create table clinics (
+    clinic_name varchar2(10),
+    adress      varchar2(100)
+);
+
+create table appointments (
+    appointment_id       integer,
+    appointment_datetime date,
+    clinic_name          varchar2(30),
+    consultant_id        integer,
+    patient_id           integer
+);
+```
+
 ## 8. Supertypes and Subtypes
 ## 9. Relational vs. Document Storage

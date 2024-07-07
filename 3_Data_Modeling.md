@@ -114,7 +114,7 @@ There are a few other normal forms. The most common is Boyce-Codd normal form. T
 
 To be in a normal form, you must meet its requirements and those of the forms lower than it. So to reach 3NF, your tables must also be in 1NF & 2NF.
 
-A full discussion of normal forms is outside the scope of this tutorial. For more details on these, read this [https://www.bkent.net/Doc/simple5.htm](simple guide to five normal forms)
+A full discussion of normal forms is outside the scope of this tutorial. For more details on these, read this [simple guide to five normal forms]([simple guide to five normal forms](https://www.bkent.net/Doc/simple5.htm)
 
 ## 7. Physical Model
 ## 8. Supertypes and Subtypes

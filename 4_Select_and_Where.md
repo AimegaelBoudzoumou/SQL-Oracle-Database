@@ -110,9 +110,82 @@ Complete the following query to find the rows that have:
 - The toy_name Sir Stripypants or the colour blue
 - And a price equal to 6
 
+```sql
+select * from toys
+where (toy_name = 'Sir Stripypants' or colour = 'blue')
+and price = 6;
+```
 
-4. Lists of Values
-5. Ranges of Values
+## 4. Lists of Values
+Often you want to get rows where a column matches any value in a list. You can do this by ORing these conditions together. For example, the following finds rows where the colour is red or green:
+
+```sql
+select * from toys
+where colour = 'red' or
+      colour = 'green';
+```
+
+But this is a pain to write if you have a large number of values!
+
+Luckily you can simplify this with IN. Place the list of values in parentheses. Then check if the column is IN this list. So this query is the same as the one above, finding all the rows where the colour is red or green:
+
+```sql
+select * from toys
+where colour IN ('red', 'green');
+```
+
+### 5. Ranges of Values
+You can also find all the rows matching a range of values with inequalities such as <, >=, etc.
+
+For example, to find all the toys that cost less than 10, use:
+
+```sql
+select * from toys
+where price < 6;
+```
+
+Or those with a price greater than or equal to 6 with:
+
+```sql
+select * from toys
+where price >= 6;
+```
+
+You can also use the condition between. This returns rows with values from a lower to an upper bound. This is inclusive, so it returns rows with values matching either limit. So the following gets all the data with a price equal to 6, 20, or any value between these two:
+
+```sql
+select * from toys
+where price between 6 and 20;
+```
+
+It is the same as the following query:
+
+```sql
+select * from toys
+where price >= 6
+and   price <= 20;
+```
+
+If you want to exclude rows at either boundary, you need to write the separate tests. For example, to get all the rows where the price is greater than 6 and less than or equal to 20, use:
+
+```sql
+select * from toys
+where price > 6
+and   price <= 20;
+```
+
+### Try It!
+Complete the following query to find the rows where:
+
+- The colour is red or blue
+- The price is greater than or equal to 6 and strictly less than 14.22
+
+```sql
+```
+
+```sql
+```
+
 6. Wildcards
 7. Null
 8. Negation

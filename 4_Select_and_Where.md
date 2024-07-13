@@ -262,9 +262,85 @@ select * from toys
 where toy_name like '%#_%' escape '#';
 ```
 
-7. Null
-8. Negation
+### Try it
+Complete the following query to find the rows that include uppercase B in toy_name:
 
+```sql
+select toy_name
+from   toys
+where  /* TODO */
+```
+
+This is a solution:
+
+```sql
+select toy_name 
+from toys
+where toy_name like '%B%';
+```
+
+7. Null
+
+The price for Baby Turtle is null. This is neither equal to nor not equal to anything! The result of comparing a value to null is unknown.
+
+Where clauses only return rows where the tests are true. So if you search for rows where the price equals null, you get no data:
+
+```sql
+select * from toys
+where price = null;
+```
+
+To find rows storing null values, you must use the "is null" condition:
+
+```sql
+select * from toys
+where price is null;
+```
+
+8. Negation
+You can return the opposite of most conditions by placing NOT before it. For example, to find all the toys that aren't green, you can do:
+
+```sql
+select *
+from toys
+where not colour = 'green';
+```
+
+You can get the same result by changing equals to either of the not equal conditions, != or <>:
+
+```sql
+select *
+from toys
+where colour != 'green';
+
+select *
+from toys
+where colour <> 'green';
+```
+
+__One exception to this is null. Searching for rows that are NOT equal to null still returns nothing:__
+
+```sql
+select * from toys
+where not colour = null;
+
+select * from toys
+where colour <> null;
+```
+
+To get all the rows with a non-null value, you must use the __is not null__ condition:
+
+```sql
+select * from toys
+where colour is not null;
+```
+
+### Try it
+
+Complete the following query to find the rows where:
+
+The colour is not green
+The price is not equal to 6   
 -------------------------------
 ```sql
 

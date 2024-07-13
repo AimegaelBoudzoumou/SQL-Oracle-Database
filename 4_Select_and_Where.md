@@ -279,7 +279,7 @@ from toys
 where toy_name like '%B%';
 ```
 
-7. Null
+7. Null : __is null__ , __is not null__
 
 The price for Baby Turtle is null. This is neither equal to nor not equal to anything! The result of comparing a value to null is unknown.
 
@@ -339,11 +339,19 @@ where colour is not null;
 
 Complete the following query to find the rows where:
 
-The colour is not green
-The price is not equal to 6   
--------------------------------
-```sql
+- The colour is not green
+- The price is not equal to 6
 
+```sql
+select toy_name
+from   toys
+where  /* TODO */
 ```
 
+This is a solution:
 
+```sql
+select toy_name from toys
+where not colour = 'green'
+and price <> 6;
+```

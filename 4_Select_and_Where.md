@@ -134,7 +134,7 @@ select * from toys
 where colour IN ('red', 'green');
 ```
 
-### 5. Ranges of Values
+## 5. Ranges of Values
 You can also find all the rows matching a range of values with inequalities such as <, >=, etc.
 
 For example, to find all the toys that cost less than 10, use:
@@ -181,12 +181,87 @@ Complete the following query to find the rows where:
 - The price is greater than or equal to 6 and strictly less than 14.22
 
 ```sql
+select * from toys
+where colour in ('red', 'blue')
+and (price >= 6 and price < 14.22);
+```
+
+## 6. Wildcards
+
+When searching strings, you can find rows matching a pattern using LIKE. This has two wildcard characters:
+
+- Underscore (_) matches exactly one character
+- Percent (%) matching zero or more characters
+
+You can place these either side of the characters you're searching for. So this finds all the rows that have a colour starting with b:
+
+
+```sql
+select * from toys
+where colour like 'b%';
 ```
 
 ```sql
+select * from toys
+where colour like 'b%';
 ```
 
-6. Wildcards
+```sql
+select * from toys
+where colour like '%n';
+```
+
+Underscore matches exactly one character. So the following finds all the rows with toy_names eleven characters long:
+
+```sql
+select * from toys
+where toy_name like '_______';
+```
+
+Percent is true even if it matches no characters. So the following tests to search for colours containing the letter "e" all return different results:
+
+```sql
+select * from toys
+where colour like '_e_';
+
+select * from toys
+where colour like '%e%';
+
+select * from toys
+where colour like '%_e_%';
+```
+
+This is because these searches work as follows:
+
+- _e_ => any colour with exactly one character either side of e (red)
+- %e% => any colour that contains e anywhere in the string (red, blue, green)
+- %_e_% => any colour with at least one character either side of e (red, green)
+
+## Searching for Wildcard Characters
+
+You may want to find rows that contain either underscore or percent. For example, if you want to see all the rows that include underscore in the toy_name, you might try:
+
+```sql
+select * from toys
+where toy_name like '%_%';
+```
+
+But this returns all the rows!
+
+This is because it sees underscore as the wildcard. So it looks for all rows that have at least one character in toy_name.
+
+To avoid this, you can use escape characters. Place this character before the wildcard. Then state what it is in the escape clause after the condition. This can be any character. But usually you'll use symbols you're unlikely to search for. Such as backslash \ or hash #.
+
+So both the following find Miss Smelly_bottom, the only toy_name that includes an underscore:
+
+```sql
+select * from toys
+where toy_name like '%\_%' escape '\';
+
+select * from toys
+where toy_name like '%#_%' escape '#';
+```
+
 7. Null
 8. Negation
 

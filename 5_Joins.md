@@ -55,7 +55,7 @@ Oracle syntax joins tables in the where clause. ANSI style has a separate join c
 
 We recommend you use ANSI syntax. This clearly separates the join and filter clauses. This can make your query easier to read, particularly with outer joins.
 
-## 3. Cross Joins
+## 3. Cross Joins : Cartesian product
 
 A cross join returns every row from the first table matched to every row in the second. This will always return the Cartesian product the two table's rows. I.e. the number of rows in the first table times the number in the second.
 
@@ -76,7 +76,7 @@ from toys
 cross join bricks;
 ```
 
-## 4. Inner Joins
+## 4. Inner Joins : Cartesian product + a condition
 
 An inner join (or just join) links two tables. It compares values in one or more columns from each. It only returns rows which match the join conditions in both tables.
 
@@ -145,7 +145,7 @@ on toy_id > brick_id;
 ![image](https://github.com/user-attachments/assets/a80751a4-fae9-45bb-a46b-fbd924590eff)
 
 
-## 5. Outer Joins
+## 5. Outer Joins : gauche/droite
 ## 6. Filtering Joins
 ## 7. Full Outer Joins
 

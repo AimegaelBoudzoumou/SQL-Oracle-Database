@@ -76,7 +76,7 @@ from toys
 cross join bricks;
 ```
 
-## 4. Inner Joins : Cartesian product + a condition
+## 4. Inner Joins : Cartesian product + the condition
 
 An inner join (or just join) links two tables. It compares values in one or more columns from each. It only returns rows which match the join conditions in both tables.
 
@@ -145,7 +145,10 @@ on toy_id > brick_id;
 ![image](https://github.com/user-attachments/assets/a80751a4-fae9-45bb-a46b-fbd924590eff)
 
 
-## 5. Outer Joins : gauche/droite
+## 5. Outer Joins : entire on side (left or ... ) + all matching row (based on the condition) of other side
+
+
+
 ## 6. Filtering Joins
 ## 7. Full Outer Joins
 

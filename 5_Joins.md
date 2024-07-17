@@ -263,5 +263,28 @@ and toy_colour = 'blue';
 
 ## 7. Full Outer Joins
 
+Sometimes you may want to join two tables to find the matching rows. But also include any unmatched rows from both tables. I.e. a "double outer" join. This is known as a full (outer) join.
+
+You do this using ANSI syntax like so:
+
 ```sql
+select *
+from   toys
+full join bricks
+on toy_id = brick_id;
 ```
+
+Writing a full outer join in Oracle syntax is a little clumsy. You need two outer join queries. One for each table. Then to combine the results of these using union all:
+
+```sql
+select * 
+from  toys, bricks
+where toy_id = brick_id (+)
+union all
+select *
+from   toys, bricks
+where  toy_id (+) = brick_id
+and    toy_id is null;
+```
+
+Like cross joins, it's rare to use this. But it's useful to have in your SQL toolkit!

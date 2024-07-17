@@ -145,11 +145,122 @@ on toy_id > brick_id;
 ![image](https://github.com/user-attachments/assets/a80751a4-fae9-45bb-a46b-fbd924590eff)
 
 
-## 5. Outer Joins : entire on side (left or ... ) + all matching row (based on the condition) of other side
+## 5. Outer Joins : entire on side (left or right ) + all matching row (based on the condition) of other side
+
+An outer join returns all the rows from one table along with the matching rows from the other. Rows without a matching entry in the outer table return null for the outer table's columns.
+
+An outer join can either be left or right. The direction defines which side of the join the database preserves the rows for.
+
+The following left joins toys and bricks on their IDs. Toys is on the left side of the join. So the database returns all its rows. You also get the rows from bricks which have the same id as these:
+
+```sql
+select *
+from toys
+left outer join bricks
+on toy_id = brick_id;
+```
+
+To outer join with Oracle syntax use the (+) operator. This goes after the columns of the table you want to optionally include. So the following is the same as the previous query:
+
+```sql
+select *
+from toys, bricks
+where toy_id = brick_id (+);
+```
+
+To return all the rows from bricks, you can switch from a left join to a right. Or change the order of the tables in your query:
+
+```sql
+select * 
+from toys
+right join bricks
+on toy_id = brick_id;
+
+select *
+from bricks
+left join toys
+on toy_id = brick_id;
+```
+
+To do the same with Oracle syntax, move the plus to the columns of the toys table:
 
 
+```sql
+select *
+from toys, bricks
+where toy_id (+) = brick_id;
+```
+
+An outer join will always return all the rows from the preserved table. So the number of rows returned varies from the size of the preserved table to the Cartesian product of the tables.
 
 ## 6. Filtering Joins
+
+You can filter the rows returned by a join in your where clause. For example, the following joins the tables on their id. Then filters the result to only show those combinations that have a green brick:
+
+
+```sql
+select *
+from  toys
+join  bricks
+on    toy_id = brick_id
+where brick_colour = 'green';
+```
+
+If you filter the outer joined table in your where clause, you'll convert the query to an inner join. And only get one row:
+
+```sql
+select *
+from toys
+left join bricks
+on toy_id = brick_id
+where brick_colour = 'green';
+
+select *
+from toys, bricks
+where toy_id (+) = brick_id
+and brick_colour = 'green';
+```
+
+To fix this, you must place the filtering criteria for the outer joined table in the join clause. And in Oracle style, add (+) to all the outer joined table's columns:
+
+```sql
+select *
+from toys
+left join bricks
+on toy_id = brick_id
+and brick_colour = 'green';
+
+select *
+from toys, bricks
+where toy_id = brick_id (+)
+and brick_colour (+) = 'green';
+```
+
+### Try it
+
+Complete the query below to return:
+
+- All the rows from bricks
+- Any rows in toys with toy_id equal to the brick_id and the toy_colour is blue
+
+```sql
+select *
+from   bricks
+left   join toys
+/* TODO */
+```
+
+This is a solution:
+
+
+```sql
+select *
+from bricks
+left outer join toys
+on brick_id = toy_id
+and toy_colour = 'blue'; 
+```
+
 ## 7. Full Outer Joins
 
 ```sql

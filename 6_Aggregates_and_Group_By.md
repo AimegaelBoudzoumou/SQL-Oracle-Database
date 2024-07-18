@@ -151,7 +151,7 @@ group by colour;
 
 This can be confusing, so it's a good idea to include all the grouping columns in your select.
 
-But the reverse isn't true! All unaggregated values in your select clause must be in the group by.
+But the reverse isn't true! __All unaggregated values in your select clause must be in the group by.__
 
 So the following will raise an exception because shape is in the select, but not the group by:
 

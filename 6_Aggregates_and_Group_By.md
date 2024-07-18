@@ -132,8 +132,62 @@ from bricks;
 
 ## 4. Grouping Aggregates
 
+As well as the overall total, you can split the results into separate groups. You do this with group by. This returns one row for each combination of values in the group by columns.
+
+For example, the following returns the number of rows for each colour:
+
+```sql
+select colour, count(*)
+from bricks
+group by colour;
+```
+You don't need to include all the columns in the group by in your select clause. The following splits the rows by colours as above. But excludes colour from the output:
+
+```sql
+select count (*)
+from bricks
+group by colour;
+```
+
+This can be confusing, so it's a good idea to include all the grouping columns in your select.
+
+But the reverse isn't true! All unaggregated values in your select clause must be in the group by.
+
+So the following will raise an exception because shape is in the select, but not the group by:
+
+```sql
+select colour, shape, count (*)
+from bricks
+group by colour;
+```
+
+You can group by many columns. The following returns the number of rows for each shape and weight:
+
+```sql
+select shape, weight, count(*)
+from bricks
+group by shape, weight;
+```
+
+### Try it
+Complete the following query to return the total weight for each shape stored in the bricks table:
+
+```sql
+select shape, /* TODO */ shape_weight
+from   bricks
+/* TODO */;
+```
+
+```sql
+select shape, sum ( weight ) total_weight
+from bricks
+group by shape;
+```
 
 ## 5. Filtering Aggregates
+
+The database processes group by after the where clause. So the following excludes rows with a weight <= 1 from the count:
+
 
 
 ## 6. Generating Subtotals

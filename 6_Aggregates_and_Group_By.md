@@ -82,10 +82,60 @@ There are also many other, more specialized aggregates. You can find a [complete
 
 ## 3. Distinct vs. All
 
+By default aggregate functions use every input value. But most allow you to work on the unique values in the input. You do this with the keyword distinct.
 
+For example, you can find the number of different values in the colour column by passing "distinct colour" to count. There are three colours (red, green, and blue). So doing this returns three:
+
+```sql
+select count ( distinct colour ) number_of_different_colours
+from bricks;
+```
+
+You can explicitly tell the function to process every row with the keyword all. You can also use unique as a synonym for distinct:
+
+```sql
+select count ( all colour ) total_number_of_rows,
+       count ( distinct colour ) number_of_different_colours,
+       count ( unique colour ) number_of_unique_colours
+from bricks;
+```
+
+You can also use distinct in most stats functions, like sum and avg. The brick table stores the weights 1, 1, 1, 2, 2, and 3. Which has the distinct values 1, 2, and 3. So the overall weight and mean are 10 and 1.66... respectively. But the distinct sum and weight are 6 and 2:
+
+```sql
+select sum ( weight ) total_weight, sum ( distinct weight ) sum_of_unique_weights,
+       avg ( weight ) overall_mean, avg ( distinct weight ) mean_of_unique_weights
+from bricks;
+```
+
+Not all aggregates support distinct. Refer to the documentation for full details.
+
+### Try it
+Complete the following query to return the:
+
+- Number of different shapes
+- The standard deviation (stddev) of the unique weights
+
+```sql
+select /* TODO */ number_of_shapes,
+       /* TODO */ distinct_weight_stddev
+from   bricks;
+```
+
+This is a solution:
+
+```sql
+select count ( distinct shape ) number_of_different_shape,
+       stddev ( distinct weight ) stddev_of_the_unique_weight
+from bricks;
+```
 
 ## 4. Grouping Aggregates
+
+
 ## 5. Filtering Aggregates
+
+
 ## 6. Generating Subtotals
 
 ```sql

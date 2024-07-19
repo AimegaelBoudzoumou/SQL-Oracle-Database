@@ -243,5 +243,53 @@ having sum ( weight ) < 4;
 
 ## 6. Generating Subtotals
 
+You can also use group by to generate subtotals for each value in the grouping columns. You can do this with rollup or cube.
+
+### Rollup
+Rollup generates the subtotals for the columns within it, working from right to left. So a rollup of:
+
+rollup ( colour, shape )
+
+calculates:
+- Totals for each ( colour, shape ) pair
+- Totals for each colour
+- The grand total
+
+The groups using every column in the rollup are regular rows. Those based on a subset are supperaggregate rows. For these superaggreagtes, the database returns null for the grouped columns. So the colour totals show null for shape. And the grand total null for colour and shape:
+
 ```sql
+select colour, shape, count (*)
+from bricks
+group by rollup (colour, shape);
 ```
+
+You can combine a rollup with non-rolledup columns. In this case the "grand total" is for the columns outside the rollup. The following calculates the total for each ( colour, shape ) pair and the number of rows for each colour:
+
+```sql
+select colour, shape, count (*)
+from bricks
+group by colour, rollup ( shape );
+```
+
+Rollup calculates N+1 groupings, where N is the number of expressions in the rollup. So a rollup with three columns returns 3+1 = 4 groupings.
+
+### Cube
+
+Cube calculates the subtotals for every combination of columns within it. So if you use:
+
+cube ( colour, shape )
+
+You get groupings for:
+
+- Each ( colour, shape ) pair
+- Each colour
+- Each shape
+- All the rows in the table
+
+```sql
+select colour, shape, count (*)
+from bricks
+group by cube (colour, shape);
+```
+
+Cube calculates 2^N groupings, where N is the number of expressions in the cube. So a cube with three columns returns 2^3 = 8 groupings.

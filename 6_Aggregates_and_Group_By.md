@@ -186,9 +186,60 @@ group by shape;
 
 ## 5. Filtering Aggregates
 
-The database processes group by after the where clause. So the following excludes rows with a weight <= 1 from the count:
+__The database processes group by after the where clause.__ So the following excludes rows with a weight <= 1 from the count:
 
+```sql
+select colour, count (*)
+from bricks
+where weight > 1
+group by colour;
+```
 
+You can only filter unaggregated values in the where clause. If you include aggregate functions here, you'll get an error.
+
+For example, the following tries to return the colours which have more than one row:
+
+```sql
+select coulor, count (*)
+from bricks
+where count (*) > 1
+group by colour;
+```
+
+But it throws an ORA-00934 error.
+
+to filter aggregate functions, use the having clause. This can go before or after group by. So the following both return the colours which have more than one row in bricks:
+
+```sql
+select colour, count (*)
+from bricks
+having count (*) > 1
+group by colour;
+
+select colour, count (*)
+from bricks
+group by colour
+having count (*) > 1;
+```
+
+You can use different functions in your select and having clauses. For example, the following finds the colours which have a total weight greater than 1. And returns how many rows there are for each of these colours:
+
+```sql
+select colour, count (*)
+from bricks
+having sum ( weight ) > 1
+group by colour;
+```
+
+### Try it
+Complete the following query to find the shapes which have a total weight less than four:
+
+```sql
+select shape, sum ( weight )
+from bricks
+group by shape
+having sum ( weight ) < 4;
+```
 
 ## 6. Generating Subtotals
 

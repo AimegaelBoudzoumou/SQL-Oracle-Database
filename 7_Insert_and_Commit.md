@@ -84,13 +84,16 @@ This will still work if someone adds another column or removes the colour column
 Complete the following query to insert a row into the toy table with the toy_id 3 and colour red:
 
 ```sql
-
+insert into toys /* TODO */ values ( 3, 'red' );
 ```
 
 This is a solution:
 
 ```sql
+insert into toys (toy_id, colour) values (3, 'red');
 
+select * from toys
+where toy_id = 3;
 ```
 
 ## 3. Multi-row Insert

@@ -388,7 +388,27 @@ where brick_id = 0;
 Dual is a special one-row table in Oracle Database. You can use this to select values or functions not stored in a real table.
 
 ## 9. Conditional Multi-table Insert
+When doing a multi-table insert, you may want choose which tables to add rows to at runtime. You can do this by adding a when clause before "into table". The database will only add rows to this table if the condition is true.
 
+Conditional multi-table inserts come in two forms: all and first.
+
+insert [ all | first ]
+  when test1 then 
+    into t1 ...
+  when test2 then 
+    into t2 ...
+    into t3 ...
+  else
+    into t4 ...
+  select * from query;
+
+### All
+
+When you specify all, the database evaluates every condition for each row the query returns. Each row goes in every table where the condition is true.
+
+You can also add an else clause. This inserts rows which match no other conditions.
+
+### First
 
 
 ```sql

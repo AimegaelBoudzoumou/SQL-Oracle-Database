@@ -191,7 +191,71 @@ where brick_id in (4, 5);
 ```
 
 ## 5. Saving DML Changes
+To save changes to the database, you must issue a commit. So to ensure you preserve the row you inserted, commit afterwards:
+
+```sql
+insert into toys (toy_id, toy_name, colour)
+  values (6, 'Green Rabbit', 'green');
+
+commit;
+
+select *
+from toys
+where toy_id = 6;
+```
+
+The row is only visible to other users after you commit. Before this point, only your session (database connection) can see the new data.
+
+Many tools have an autocommit property. This will do the commit for you. Either after each call to the database. Or when the session ends.
+
+LiveSQL commits after each click of the Run button completes.
+
+Ensure you check how this is set. If autocommit is on and you think it isn't (or vice-versa) it can lead to saving unwanted changes!
+
+How to do this is specific to your tools and programming language. Refer to their documentation to find out how to set the autocommit property.
+
 ## 6. Undoing DML
+
+Between inserting a row and committing it, your code may throw an exception. So you may wish to undo the change. You can do this with rollback. Rollback reverts all the changes since your last commit.
+
+Say you added a row for Pink Rabbit. But realize you made a mistake, so want to remove it. The following does that:
+
+```sql
+insert into toys (toy_id, toy_name, colour)
+  values (7, 'Pink Rabbit', 'pink');
+
+select * from toys
+where toy_id = 7;
+
+rollback;
+
+select * from toys
+where toy_id = 7;
+```
+
+When you issue a rollback, the database will undo all changes you made since your last commit. If you commit between insert and rollback, rollback does nothing. And you need to run a delete to remove the row.
+
+Note: Please ensure the SQL Worksheet includes all insert and rollback statements when you click Run. Each time you press run, Live SQL runs an implicit commit at the end of your statements so if you run each statement one at a time, you will not be able to rollback.
+
+For example, the following commits the change before the rollback - so the row for Pink Rabbit remains in the table:
+
+```sql
+insert into toys (toy_id, toy_name, colour)
+  values (7, 'Pink Rabbit', 'pink');
+
+select * from toys
+where toy_id = 7;
+
+commit;
+rollback;
+
+select * from toys
+where toy_id = 7;
+```
+
 ## 7. Savepoints
 ## 8. Multi-table Insert
 ## 9. Conditional Multi-table Insert
+
+```sql
+```

@@ -358,9 +358,35 @@ select * from toys
 where toy_id in ( 8, 9, 10 );
 ```
 
-
-
 ## 8. Multi-table Insert
+You can also insert rows into many tables in one statement. This is a multi-table insert. The general format of it is:
+
+insert all
+  into tab1 ( col1, col2, ...) values ( 'val1', 'val2', ...)
+  into tab2 ( col1, col2, ...) values ( 'val1', 'val2', ...)
+  into ...
+  select * from query;
+
+Like a multi-row insert, the source of these values must be a query. It adds a row to all the tables you list. You can even insert to the same table more than once!
+
+The query below uses the dual table to select the value 0. Then insert it to bricks twice and toys once:
+
+```sql
+insert all
+	into bricks ( brick_id ) values ( id )
+	into bricks ( brick_id ) values ( id )
+	into toys ( toy_id ) values ( id )
+select 0 id from dual;
+
+select * from toys
+where toy_id = 0;
+
+select * from bricks
+where brick_id = 0;
+```
+
+Dual is a special one-row table in Oracle Database. You can use this to select values or functions not stored in a real table.
+
 ## 9. Conditional Multi-table Insert
 
 ```sql

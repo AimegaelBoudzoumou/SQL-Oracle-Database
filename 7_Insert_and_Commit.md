@@ -389,5 +389,7 @@ Dual is a special one-row table in Oracle Database. You can use this to select v
 
 ## 9. Conditional Multi-table Insert
 
+
+
 ```sql
 ```

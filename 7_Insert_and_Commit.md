@@ -323,6 +323,41 @@ rollback to savepoint first_sp;
 ```
 
 ### Try it
+Complete the following code, placing commits, savepoints, and rollbacks in the /* TODO */ sections, so that you:
+
+- Commit the insert of toy_id 8
+- Add rows for toy_id 9 & 10, but then remove the row for 10
+- Then undo the insert for toy_id 9
+
+```sql
+insert into toys ( toy_id, toy_name, colour )
+  values ( 8, 'Red Rabbit', 'red' );
+
+/* TODO */
+commit;
+
+insert into toys (toy_id, toy_name, colour)
+  values ( 9, 'Purple Ninja', 'red' );
+
+/* TODO */
+exec savepoint to_nine;
+
+insert into toys (toy_id, toy_name, colour)
+values ( 10, 'Blue Dinosaur', 'blue' );
+
+/* TODO */
+rollback to savepoint to_nine;
+
+select * from toys
+where toy_id IN ( 8, 9, 10 );
+
+/* TODO */
+rollback;
+
+select * from toys
+where toy_id in ( 8, 9, 10 );
+```
+
 
 
 ## 8. Multi-table Insert

@@ -98,7 +98,19 @@ where toy_id = 3;
 
 ## 3. Multi-row Insert
 
+You can add many rows in one statement. To do this, you insert the output of a query.
 
+For example, the insert below gets all the toy_ids in the toys table. Then inserts them into the bricks table:
+
+```sql
+select * from toys;
+
+insert into bricks ( brick_id )
+	select toy_id
+	from toys;
+
+select * from bricks;
+```
 
 ## 4. Performance: Single Row vs. Multi-row
 ## 5. Saving DML Changes

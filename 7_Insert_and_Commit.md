@@ -361,11 +361,13 @@ where toy_id in ( 8, 9, 10 );
 ## 8. Multi-table Insert
 You can also insert rows into many tables in one statement. This is a multi-table insert. The general format of it is:
 
+```sql
 insert all
   into tab1 ( col1, col2, ...) values ( 'val1', 'val2', ...)
   into tab2 ( col1, col2, ...) values ( 'val1', 'val2', ...)
   into ...
   select * from query;
+```
 
 Like a multi-row insert, the source of these values must be a query. It adds a row to all the tables you list. You can even insert to the same table more than once!
 
@@ -392,6 +394,7 @@ When doing a multi-table insert, you may want choose which tables to add rows to
 
 Conditional multi-table inserts come in two forms: all and first.
 
+```sql
 insert [ all | first ]
   when test1 then 
     into t1 ...
@@ -401,6 +404,7 @@ insert [ all | first ]
   else
     into t4 ...
   select * from query;
+```
 
 ### All
 

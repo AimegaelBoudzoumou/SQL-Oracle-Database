@@ -283,6 +283,46 @@ For example, the code below:
 - Creates the savepoint after_six
 - Then inserts toy_id 9
 
+The rollback to savepoint only removes the row for toy_id 9. The final rollback at the end also removes toy_id 8:
+
+```sql
+insert into toys (toy_id, toy_name, colour)
+  values ( 8, 'Pink Rabbit', 'pink' );
+
+exec savepoint after_six;
+
+insert into toys (toy_id, toy_name, colour)
+  values ( 9, 'Purple Ninja', 'purple' );
+
+select * from toys
+where toy_id in ( 8, 9 );
+
+rollback to savepoint after_six;
+
+select * from toys
+where toy_id in ( 8, 9 );
+
+rollback;
+
+select * from toys
+where toy_id in ( 8, 9 );
+```
+
+You can create many savepoints in one call. And rollback to any of them. If you rollback to a savepoint this destroys any made after the one you name. But you can still go back to the earlier points.
+
+For example, the following creates three savepoints. But the first rollback undoes the changes after second_sp. So third_sp is lost and you can no longer go back to it:
+
+```sql
+exec savepoint first_sp;
+exec savepoint second_sp;
+exec savepoint third_sp;
+
+rollback to savepoint second_sp;
+rollback to savepoint third_sp; /* Fails - third_sp no longer exists */
+rollback to savepoint first_sp;
+```
+
+### Try it
 
 
 ## 8. Multi-table Insert

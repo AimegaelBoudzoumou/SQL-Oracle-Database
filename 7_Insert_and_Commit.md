@@ -428,3 +428,7 @@ You can see the difference between all and first in code below. The row for toy_
 
 So insert all adds two copies of this row into bricks. But insert first stops processing when identifies the colour as blue. So it only inserts one copy:
 
+```sql
+
+```
+

@@ -414,6 +414,17 @@ You can also add an else clause. This inserts rows which match no other conditio
 
 ### First
 
+Insert first evaluates the conditions from top to bottom. If a row matches many conditions, it only adds the row to the highest one that is true. It skips all remaining tests.
+
+As with insert all, you can provide an else clause to catch rows which match no other conditions.
+
+You can see the difference between all and first in code below. The row for toy_id 11 has the name Cuteasaurus and colour blue. So it matches both of these tests:
 
 ```sql
+  when colour = 'blue' then
+    ..
+  when toy_name = 'Cuteasaurus' then
 ```
+
+So insert all adds two copies of this row into bricks. But insert first stops processing when identifies the colour as blue. So it only inserts one copy:
+

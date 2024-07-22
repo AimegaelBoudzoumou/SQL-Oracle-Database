@@ -253,7 +253,38 @@ select * from toys
 where toy_id = 7;
 ```
 
+Clicking one button in your application may fire many DML statements. You should defer committing until after processing them all. This allows you to rollback the changes if an error happens part way through. This ensures all other users of the application either see all the changes or none of them.
+
 ## 7. Savepoints
+Your code will often add rows to many tables in one action. If there is an error part-way through, you may want to undo some - but not all - the changes since the last commit.
+
+To help with this you can create savepoints. These are checkpoints. You can undo all changes made after it. And preserve those made beforehand.
+
+To do this, first create the checkpoint with the savepoint command. Give it a name to refer to later:
+
+```sql
+exec savepoint save_this;
+```
+
+Note: exec is a requirement for LiveSQL. You do not need this prefix in other environments.
+
+To undo the changes after the savepoint, add the clause "to savepoint" after rollback. Give the name of the savepoint you want to revert to. This undo will the changes you made after this:
+
+```sql
+exec savepoint save_this;
+rollback to savepoint save_this;
+```
+
+Note that savepoints do NOT commit! If you issue an unqualified rollback, you'll still reverse all changes since the last commit. Even those made before the savepoint.
+
+For example, the code below:
+
+- Adds a row for toy_id 8
+- Creates the savepoint after_six
+- Then inserts toy_id 9
+
+
+
 ## 8. Multi-table Insert
 ## 9. Conditional Multi-table Insert
 

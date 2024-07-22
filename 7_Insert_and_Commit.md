@@ -171,7 +171,7 @@ insert into toys (toy_id, colour) values (5, 'green');
 
 Then complete this insert statement to add the rows for toy_ids 4 & 5 to bricks. It should store toy_id values in brick_id. And toy colours in brick colours.
 
-```sl
+```slq
 insert /* TODO */
   select toy_id, colour
   from   toys

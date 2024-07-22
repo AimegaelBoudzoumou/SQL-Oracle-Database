@@ -112,7 +112,52 @@ insert into bricks ( brick_id )
 select * from bricks;
 ```
 
+Like single-row inserts, the number of columns in the query and target table must match. The data types of the columns in each position must also be compatible.
+
+The toys table has three columns. But the query only returns one column. So the following statement will fail (**ORA-00913: too many values**):
+
+```sql
+insert into bricks ( bircks_id )
+	select *
+	from toys;
+```
+
+So, as with standalone queries, it's a good idea to list the columns in your select clause.
+
 ## 4. Performance: Single Row vs. Multi-row
+In general it's better to combine SQL commands into as few statements as possible. This will give the best performance.
+
+For example, the following compares the performance of single-row vs multi-row inserts. Both add 50,000 rows. Single-row adds one row 50,000 times. Multi-row adds 50,000 rows in one go. The multi-row version will be 10x to 100x faster!
+
+```sql
+declare 
+	start_time   pls_integer;
+	insert_count pls_integer := 5000;
+begin
+	start_time := dbms_utility.get_time ();
+
+	for i in 1 .. insert_count loop
+		insert into bricks
+		values (i, 'red', 'cube');
+	end loop;
+
+	dbms_output.put_line ( 'Single-row duration = ' || (dbms_utility.get_time() - start_time) );
+
+	rollback;
+
+	start_time := dbms_utility.get_time();
+
+	insert into bricks
+		select level, 'red', 'cube' from dual
+		connect by level <= insert_count;
+
+	dbms_output.put_line ( 'Single-row duration = ' || ( dbms_utility.get_time() - start_time) );
+
+	rollback;
+end;
+/
+```
+
 ## 5. Saving DML Changes
 ## 6. Undoing DML
 ## 7. Savepoints

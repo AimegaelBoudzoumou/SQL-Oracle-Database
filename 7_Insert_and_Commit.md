@@ -158,6 +158,38 @@ end;
 /
 ```
 
+So use multi-row inserts where you can!
+
+### Try it
+
+Run these inserts:
+
+```sql
+insert into toys (toy_id, colour) values (4,'blue');
+insert into toys (toy_id, colour) values (5, 'green');
+```
+
+Then complete this insert statement to add the rows for toy_ids 4 & 5 to bricks. It should store toy_id values in brick_id. And toy colours in brick colours.
+
+```sl
+insert /* TODO */
+  select toy_id, colour
+  from   toys
+  where  toy_id in ( 4, 5 );
+```
+
+This is a solution:
+
+```slq
+insert into bricks (brick_id, colour)
+	select toy_id, colour
+	from toys
+	where toy_id IN (4, 5);
+
+select * from bricks
+where brick_id in (4, 5);
+```
+
 ## 5. Saving DML Changes
 ## 6. Undoing DML
 ## 7. Savepoints

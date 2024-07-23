@@ -65,7 +65,7 @@ If many people try to update the same rows at the same time, only the first pers
 ### Try it
 Complete the following update to set the unit_weight of all bricks to 21:
 
-````sql
+```sql
 update bricks
 set    /* TODO */;
 ```

@@ -71,7 +71,7 @@ set    /* TODO */;
 ```
 
 This is a solution:
-````sql
+```sql
 update bricks
 set unit_weight = 21;
 

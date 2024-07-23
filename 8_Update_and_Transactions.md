@@ -66,16 +66,44 @@ If many people try to update the same rows at the same time, only the first pers
 Complete the following update to set the unit_weight of all bricks to 21:
 
 ````sql
-
+update bricks
+set    /* TODO */;
 ```
 
 This is a solution:
 ````sql
+update bricks
+set unit_weight = 21;
+
+select unit_weight from bricks;
+```
+
+## 3. Filtering Updates
+It's rare you want to update all the rows in a table. Usually you only want to change a few.
+
+You can do this by providing a where clause. This works in the same way as in select statements. Only rows where the conditions are true will change.
+
+This update changes the quantity to 1,422 for all rows with colour of red:
+
+```sql
+update bricks
+set    quantity = 1422
+where  colour = 'red';
+
+select * from bricks
+```
+### Try it
+
+Complete the update below to set the unit_weight of all the rows storing the shape cube to 5:
+
+```sql
 
 ```
 
+This is a solution:
+```sql
 
-## 3. Filtering Updates
+```
 
 ## 4. Transactions
 ## 5. Deadlocks

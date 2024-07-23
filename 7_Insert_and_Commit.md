@@ -429,6 +429,56 @@ You can see the difference between all and first in code below. The row for toy_
 So insert all adds two copies of this row into bricks. But insert first stops processing when identifies the colour as blue. So it only inserts one copy:
 
 ```sql
+drop table toys;
+drop table bricks;
 
+create table toys (
+  toy_id   integer,
+  toy_name varchar2(100),
+  colour   varchar2(10)
+);
+
+create table bricks (
+  brick_id integer,
+  colour   varchar2(10),
+  shape    varchar2(10)
+);
+
+insert into toys (toy_id, toy_name, colour) values (11, 'Cuteasaurus', 'blue');
+insert into toys (toy_id, toy_name, colour) values (12, 'Sir Stripypants', 'blue');
+insert into toys (toy_id, toy_name, colour) values (13, 'White Rabbit', 'white');
+
+exec savepoint post_toys;
+
+insert all
+    when colour = 'blue' then
+    	into bricks (brick_id, colour) values (toy_id, colour)
+	when toy_name = 'Cuteasaurus' then
+		into bricks (brick_id, colour) values (toy_id, colour)
+	else
+		into bricks (brick_id, colour) values (toy_id, colour)
+	select * from toys
+	where toy_id >= 11;
+
+select * from bricks where brick_id >= 11;
+
+rollback to savepoint post_toys;
+
+insert first
+	when colour = 'blue' then
+		into bricks (brick_id, colour) 
+    	values (toy_id, colour)
+	when toy_name = 'Cuteasaurus' then
+		into bricks (brick_id, colour) 
+    	values (toy_id, colour)
+	else
+		into bricks (brick_id, colour) 
+    	values (toy_id, colour)
+	select * from toys
+	where toy_id >= 11;
+
+select * from bricks
+where brick_id >= 11;
+
+rollback;
 ```
-

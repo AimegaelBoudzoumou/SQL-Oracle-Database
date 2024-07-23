@@ -12,8 +12,8 @@
 8. Optimistic Locking
 
 -----------------------------------------------------------------------------------------------------------------------
-
-## 1. Introduction
+### Prerequisite SQL
+```sql
 create table bricks (
     colour      varchar2(10),
     shape       varchar2(10),
@@ -26,12 +26,15 @@ insert into bricks values ( 'blue', 'cube', 51, 8 );
 insert into bricks values ( 'green', 'cube', 600, 8 );
 
 commit;
+```
 
-## 2. Update Statement
+## 1. Introduction
 This tutorial teaches you how to change values using the update statement. Like select and insert, this is also a DML statement. The examples use the following table:
 ```sql
 select * from bricks;
 ```
+
+## 2. Update Statement
 
 ## 3. Filtering Updates
 

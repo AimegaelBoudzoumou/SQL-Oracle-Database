@@ -437,11 +437,9 @@ exec savepoint post_toys;
 
 insert all
     when colour = 'blue' then
-    	into bricks (brick_id, colour) 
-    	values (toy_id, colour)
-	when toy_name = 'Cuteasaurus' then
-		into bricks (brick_id, colour) 
-    	values (toy_id, colour)
+    	into bricks (brick_id, colour) values (toy_id, colour)
+    when toy_name = 'Cuteasaurus' then
+		into bricks (brick_id, colour) values (toy_id, colour)
 	else
 		into bricks (brick_id, colour) 
     	values (toy_id, colour)

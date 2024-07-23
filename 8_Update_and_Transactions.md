@@ -97,15 +97,21 @@ select * from bricks
 Complete the update below to set the unit_weight of all the rows storing the shape cube to 5:
 
 ```sql
-
+update bricks
+set    /* TODO */
+where  /* TODO */;
 ```
 
 This is a solution:
 ```sql
-
+update bricks
+set unit_weight = 5
+where shape = 'cube';
 ```
 
 ## 4. Transactions
+A transaction is the smallest unit of work which leaves the database in a consistent state. When a user saves changes in your application, this may generate many inserts, updates or deletes in your code. All these changes form one transaction.
+
 ## 5. Deadlocks
 ## 6. Select For Update
 ## 7. Lost Updates

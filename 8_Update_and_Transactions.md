@@ -170,6 +170,36 @@ Deadlock!
 
 ![image](https://github.com/user-attachments/assets/550cc8ac-bee7-4659-8aa9-aa295b5462a0)
 
+When deadlock happens, Oracle Database will detect it. The database will then stop one of the statements, raising an ORA-00060.
+
+You can simulate a deadlock in one session with autonomous transactions. These start a transaction within a transaction.
+
+So the following code contains two transactions. The parent transaction updates all the rows in bricks, blocking other changes to these rows. The autonomous transaction after it also tries to update all the rows.
+
+This is impossible. For the parent transaction to continue, the child autonomous transaction must complete. But the update in the parent blocks the update in the child child!
+
+So the database identifies this as a deadlock. It stops the second update, raising ORA-00060. And allows you to commit or rollback the first update:
+
+```sql
+update bricks
+set    quantity = 60;
+
+declare
+	pragma autonomous_transaction;
+begin
+	update bricks
+	set    unit_weight = 55;
+	commit;
+end;
+/
+
+select * from bricks;
+
+rollback;
+```
+Note that an update locks the whole row. Even though the two updates set different columns, the second is still blocked. Leading to deadlock.
+
+Deadlocks are caused by errors in your code. To avoid them, you must change how you write your transactions.
 
 ## 6. Select For Update
 ## 7. Lost Updates

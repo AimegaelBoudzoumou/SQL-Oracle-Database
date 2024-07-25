@@ -299,6 +299,89 @@ As you can see, the second update sets the unit_weight from the new value of 8 b
 This problem can be hard to spot. Immediately after the person setting the weight saves their changes, everything looks fine. So they go on to do something else. Same for the stock level manager. So it may take some time for staff to realise there's a data error.
 
 ## 8. Optimistic Locking
+You could avoid the issue above by having separate forms for managing weights and quantities. Saving changes in each of these runs an update which only changes values in the relevant column.
+
+But separation like this isn't always possible. And it's more work to develop. In general to avoid lost updates you can use pessimistic or optimistic locking.
+
+Pessimistic locking locks rows from the time the user first queries them with select for update. The lock remains until they save their changes. To use it, you need a stateful application. This is rare in the web, where most applications are stateless. Most applications you work on will use optimistic locking.
+
+Optimistic locking works by checking values the user read are still the same when they update the row. If they aren't the update does nothing.
+
+There are many ways you can do this, including:
+
+- Adding a version number to each row
+- Adding a last updated timestamp to each row
+- Checking that the current values match those queried when you run your update
+
+For example, to avoid the lost update described in the previous module, you could change the updates to:
 
 ```sql
+update bricks
+set    quantity = 1001,
+       unit_weight = 13
+where  colour = 'red'
+and    shape  = 'cylinder'
+and    quantity = 60    -- original quantity
+and    unit_weight = 13 -- orginal weight
+;
+
+select *
+from bricks
+where colour = 'red'
+and   shape  = 'cylinder';
 ```
+This method gets cumbersome when the update changes many columns. You need a large where clause to check all the original values!
+
+An easier way is to add a version or timestamp column to the table. When you run an update, check it has the same value as read at query time. And change it during the update.
+
+For example, this adds the column version_number to bricks:
+
+
+```sql
+alter table bricks add (version_number integer default 1);
+
+select * from bricks;
+```
+
+The updates check this value in their where clause. And increment it in the set clause.
+
+When they query the row, both users get it with a version number of 1. So this is the value the application passes back to the database during update.
+
+The first update succeeds, increasing the version number to 2:
+
+```sql
+update bricks
+set    quantity = 60,
+       unit_weight = 8,
+       version_number = version_number + 1
+where  colour = 'red'
+and    shape  = 'cylinder'
+and    version_number = 1;
+
+select *
+from   bricks
+where  colour = 'red'
+and    shape  = 'cylinder';
+```
+
+So when the second runs, the condition
+
+version_number = 1
+
+is false. So the update does nothing:
+
+```sql
+update bricks
+set    quantity = 1001,
+       unit_weight = 13,
+       version_number = version_number + 1
+where  colour = 'red'
+and    shape  = 'cylinder'
+and    version_number = 1;
+
+select *
+from   bricks
+where  colour = 'red'
+and    shape  = 'cylinder';
+```
+When using optimistic locking, your code needs to check for "no change" updates. Then inform the user the data have changed since they last read it. And ask them to resubmit their changes.

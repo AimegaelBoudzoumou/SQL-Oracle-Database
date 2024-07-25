@@ -241,6 +241,63 @@ Deadlock can also happen when a transaction updates two or more different tables
 This is harder to avoid. You need to ensure all transactions lock tables in the same order. You need define an order for acquiring locks. And ensure all developers on the application using the same method. This requires thorough documentation, code reviews, and testing to ensure deadlock is impossible.
 
 ## 7. Lost Updates
+A lost update happens when two people change the same row and one overwrites another's changes. This is a common problem if you set values for all column not in the where clause. Regardless of whether the user changed the value.
+
+For example, say currently there are 60 red cylinders in stock, with a unit weight of 13. Run this update to set these values:
+```sql
+update bricks
+set    quantity = 60,
+       unit_weight = 13
+where  colour = 'red'
+and    shape = 'cylinder';
+```
+
+You have two people managing brick stock. One handles quantities, the other weights. They both load the current details for red cylinders to the edit form using this query:
+
+```sql
+select *
+from   bricks
+where  colour = 'red'
+and    shape = 'cylinder';
+```
+At this point they both see a quantity of 60 and weight of 13.
+
+Then one person sets the weight to 8. And the other the quantity to 1,001. But they leave the value for the other attribute the same. They then both save their changes. The application updates both columns each time.
+
+For each person, the update runs with the original value for the unchanged column. So the update to change the weight runs with these values:
+
+```sql
+update bricks
+set    quantity = 60,   -- original quantity
+       unit_weight = 8 -- new weight
+where colour = 'red'
+and   shape  = 'cylinder';
+
+select * 
+from bricks
+where colour = 'red'
+and   shape  = 'cylinder';
+```
+
+And the quantity change runs with these values:
+
+```sql
+update bricks
+set    quantity = 1001,   -- new quantity
+       unit_weight = 13   -- original weight
+where colour = 'red'
+and   shape  = 'cylinder';
+
+select * 
+from bricks
+where colour = 'red'
+and   shape  = 'cylinder';
+```
+
+As you can see, the second update sets the unit_weight from the new value of 8 back to the original, 13. So the update setting the weight to 8 is lost.
+
+This problem can be hard to spot. Immediately after the person setting the weight saves their changes, everything looks fine. So they go on to do something else. Same for the stock level manager. So it may take some time for staff to realise there's a data error.
+
 ## 8. Optimistic Locking
 
 ```sql

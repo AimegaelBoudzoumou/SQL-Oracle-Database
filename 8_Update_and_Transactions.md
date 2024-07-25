@@ -112,7 +112,65 @@ where shape = 'cube';
 ## 4. Transactions
 A transaction is the smallest unit of work which leaves the database in a consistent state. When a user saves changes in your application, this may generate many inserts, updates or deletes in your code. All these changes form one transaction.
 
+A transaction ends when you commit or rollback (to the previous commit). You should only commit after running all the changes.
+
+For example, say you paint ten of the green cubes blue. So you need to increase the quantity of blue cubes by 10. And decrease the green bricks by the same amount. If one update completes but not the other the total quantity will be out by 10.
+
+This is can happen if you place a commit between the updates, as in this code:
+
+```sql
+update bricks
+set   quantity = quantity - 10
+where colour = 'green'
+and   shape = 'cube';
+
+commit;
+
+update bricks
+set   quantity = quantity + 10
+where colour = 'blue'
+and   shape = 'cube';
+
+commit;
+
+select * from bricks;
+
+If the update of the blue rows fails for some reason, you've removed ten green cubes, but not added ten blue. So these bricks are "missing". Resolving this in code is hard. To fix the error, it's likely you'll need to run a one-off update.
+
+To avoid this problem, move the commit to the end:
+
+```sql
+update bricks
+set   quantity = quantity - 10
+where colour = 'green'
+and   shape = 'cube';
+
+update bricks
+set   quantity = quantity + 10
+where colour = 'blue'
+and   shape = 'cube';
+
+commit;
+
+select * from bricks;
+```
+Now both updates are in the same transaction. If either fails, you can rollback the whole transaction and try again.
+
+
 ## 5. Deadlocks
+When a transaction runs many updates, you need to take care. If two or more people try to change the same rows at the same time, you can get into deadlock situations. This is where sessions form a circle, each waiting on the other.
+
+In the example below, both transactions start by updating different rows. So the first session has locked the rows with the colour red. And the second locks rows with the colour blue.
+
+The first session then tries to update rows storing blue. But transaction two has these locked! So it's blocked, waiting for transaction 2 to complete.
+
+But transaction two, instead of committing or rolling back, tries to update rows storing red. But transaction one has these rows locked! So it's stuck. At this point both sessions are waiting for the other to release a lock.
+
+Deadlock!
+
+![image](https://github.com/user-attachments/assets/550cc8ac-bee7-4659-8aa9-aa295b5462a0)
+
+
 ## 6. Select For Update
 ## 7. Lost Updates
 ## 8. Optimistic Locking

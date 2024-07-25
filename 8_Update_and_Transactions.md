@@ -202,6 +202,44 @@ Note that an update locks the whole row. Even though the two updates set differe
 Deadlocks are caused by errors in your code. To avoid them, you must change how you write your transactions.
 
 ## 6. Select For Update
+You're at risk of deadlock if a transaction runs two or more update statements on the same table. And two people running the transaction may update the same rows, but in a different order.
+
+In these cases you should lock the rows before running any updates. You can do this with select for update. Like update itself, this locks rows matching the where clause. To use is, place the "for update" clause after your query.
+
+So the following locks all the rows with the colour red:
+
+```sql
+select * from bricks
+where colour = 'red'
+for   update;
+```
+
+No one else can update, delete or select for update these rows until you commit or rollback.
+
+You can use this to avoid deadlock by running a select for update at the start of your transaction. For example, to avoid the deadlock described in the previous module, a run select for update at the start. This selects rows for the colours red and blue. Then run the updates:
+
+```sql
+select * from bricks
+where colour IN ( 'red', 'blue' )
+for   update;
+
+update bricks
+set    quantity = 1001
+where  colour = 'red';
+
+update bricks
+set    quantity = 1722
+where  colour = 'blue';
+```
+
+Changing the transactions to do this gives the following outcome:
+
+![image](https://github.com/user-attachments/assets/73db8e9a-2f0c-4ab0-a9d5-02942e249790)
+
+Deadlock can also happen when a transaction updates two or more different tables. If two separate transactions update two tables in a different order, you'll have deadlock.
+
+This is harder to avoid. You need to ensure all transactions lock tables in the same order. You need define an order for acquiring locks. And ensure all developers on the application using the same method. This requires thorough documentation, code reviews, and testing to ensure deadlock is impossible.
+
 ## 7. Lost Updates
 ## 8. Optimistic Locking
 

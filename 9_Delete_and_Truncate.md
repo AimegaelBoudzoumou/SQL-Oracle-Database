@@ -125,3 +125,8 @@ So many applications implement a "soft delete" instead. This adds an "is deleted
 ```sql
 alter table toys add is_deleted varchar2(1) default 'N';
 ```
+
+When adding new rows, ensure this value is N (No):
+
+```sql
+```

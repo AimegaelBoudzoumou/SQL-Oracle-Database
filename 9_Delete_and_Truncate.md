@@ -5,10 +5,7 @@
 1. Introduction
 2. Delete
 3. Truncate
-4. Soft Deletes
-   1. Views
-   2. VPD
-   3. In-Database Archiving
+4. Soft Deletes : Views, VPD, In-Database Archiving
 
 -----------------------------------------------------------------------------------------------------------------------
 ### Prerequisite SQL
@@ -169,6 +166,11 @@ Luckily Oracle Database offers many ways to simplify this, including:
 - In-Database Archiving
 
 ### 4.1 Views
+The most universal way is to create a view over the top of the table. This contains the query excluding "deleted" rows. You change your application to query the view instead of the table.
+
+For example:
+
+
 
 ### 4.2. VPD
 

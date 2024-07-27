@@ -144,3 +144,24 @@ commit;
 
 Now, to "delete" rows, you run an update. This sets the deleted flag to Yes:
 
+```sql
+update toys
+set is_deleted = 'Y'
+where toy_name = 'Cuteasaurus';
+
+select * from toys;
+```
+
+But now you need to filter out the "deleted" values in most queries. This makes your code more complicated. To get only active rows, you need to add a where clause to all these queries. For example:
+
+```sql
+select * from toys
+where is_deleted = 'N';
+```
+
+Luckily Oracle Database offers many ways to simplify this, including:
+
+- Using views
+- Virtual Private Database (VPD)
+- In-Database Archiving
+

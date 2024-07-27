@@ -5,7 +5,7 @@
 1. Introduction
 2. Delete
 3. Truncate
-4. Soft Deletes
+4. Soft Deletes : Views. VPD. In-Database Archiving
 
 -----------------------------------------------------------------------------------------------------------------------
 ### Prerequisite SQL
@@ -165,3 +165,4 @@ Luckily Oracle Database offers many ways to simplify this, including:
 - Virtual Private Database (VPD)
 - In-Database Archiving
 
+### 4.1 Views

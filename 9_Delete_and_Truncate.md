@@ -129,4 +129,18 @@ alter table toys add is_deleted varchar2(1) default 'N';
 When adding new rows, ensure this value is N (No):
 
 ```sql
+delete toys;
+
+insert into toys values ('Baby Turtle', 0.01, 'N');
+insert into toys values ('Miss Snuggles', 0.51, 'N');
+insert into toys values ('Cuteasaurus', 10.01, 'N');
+insert into toys values ('Sir Stripypants', 14.03, 'N');
+insert into toys values ('Purple Ninja', 14.22, 'N');
+
+select * from toys;
+
+commit;
 ```
+
+Now, to "delete" rows, you run an update. This sets the deleted flag to Yes:
+

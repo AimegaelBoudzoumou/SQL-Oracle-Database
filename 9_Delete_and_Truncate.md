@@ -6,9 +6,9 @@
 2. Delete
 3. Truncate
 4. Soft Deletes
-   4.1. Views
-   4.2. VPD
-   4.3. In-Database Archiving
+   1. Views
+   2. VPD
+   3. In-Database Archiving
 
 -----------------------------------------------------------------------------------------------------------------------
 ### Prerequisite SQL

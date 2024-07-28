@@ -118,6 +118,8 @@ Keeping the storage is useful if you re-insert a similar number of rows soon aft
 ## 4. Soft Deletes
 Once you commit a delete or run a truncate, the rows are gone. To recover the data you need to restore from a backup*.
 
+*Oracle Flashback technologies enable you to [recover lost data without a backup!](https://blogs.oracle.com/sql/post/how-to-recover-data-without-a-backup)
+
 This is time-consuming and awkward. So it's hard to recover data deleted by accident. Many businesses are also subject to regulations stating that they can't remove certain types of data. For example, financial transactions.
 
 So many applications implement a "soft delete" instead. This adds an "is deleted" flag to your tables. For example:
@@ -183,3 +185,40 @@ You use VPD to control which users can see which rows. It does this by adding wh
 For more on VPD, [read this article](https://oracle-base.com/articles/8i/virtual-private-databases).
 
 ### 4.3. In-Database Archiving
+Oracle Database 12c introduced In-Database Archiving. This offers a new way to show or hide removed rows. It adds the invisible column ora_archive_state to each table you enable it for.
+
+Do this with the following command:
+
+```sql
+alter table toys row archival;
+```
+
+You then "delete" rows by setting ora_archive_state to any value other than zero. For example:
+
+```sql
+update toys
+set    ora_archive_state = '1'
+where  toy_name = 'Baby Turtle';
+
+select * from toys;
+```
+
+You control which rows are visible in the session. If you set the row archival visibility to all, you see everything:
+
+```sql
+select * from toys;
+
+alter session set row archival visibility = all;
+
+select * from toys;
+```
+
+To auto-filter out the deleted rows, set the visibility to active:
+
+```sql
+select * from toys;
+
+alter session set row archival visibility = active;
+
+select * from toys;
+```

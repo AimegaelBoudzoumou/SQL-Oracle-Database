@@ -169,9 +169,17 @@ Luckily Oracle Database offers many ways to simplify this, including:
 The most universal way is to create a view over the top of the table. This contains the query excluding "deleted" rows. You change your application to query the view instead of the table.
 
 For example:
+```sql
+create or replace view active_toys as
+	select * from toys
+	where is_deleted = 'N';
 
-
+select * from active_toys;
+```
 
 ### 4.2. VPD
+You use VPD to control which users can see which rows. It does this by adding where clauses to your queries based on policies. This is primarily a security feature, allowing you to stop people seeing sensitive data without clearance. But you can also use it to manage soft-deletion.
+
+For more on VPD, [read this article](https://oracle-base.com/articles/8i/virtual-private-databases).
 
 ### 4.3. In-Database Archiving
